@@ -7,7 +7,7 @@ export default function Dashboard() {
       <div id="wd-dashboard-courses">
 
         <div className="wd-dashboard-course">
-          <img src="/images/reactjs.webp" width={200} />
+          <img src="/images/reactjs.webp" width={200} alt="React Framework Course" />
           <div>
             <Link className="wd-dashboard-course-link"
               to="/Kanbas/Courses/CS1010/Home">
@@ -21,7 +21,7 @@ export default function Dashboard() {
         </div>
 
         <div className="wd-dashboard-course">
-          <img src="/images/ai.jpg" width={200} />
+          <img src="/images/ai.jpg" width={200} alt="AI Course" />
           <div>
             <Link className="wd-dashboard-course-link" to="/Kanbas/Courses/CS2020/Home">
               CS2020 Artificial Intelligence
@@ -34,7 +34,7 @@ export default function Dashboard() {
         </div>
 
         <div className="wd-dashboard-course">
-          <img src="/images/cybersecurity.jpg" width={200} />
+          <img src="/images/cybersecurity.jpg" width={200} alt="Cyber Security Course" />
           <div>
             <Link className="wd-dashboard-course-link" to="/Kanbas/Courses/CS3030/Home">
               CS3030 Cyber Security
@@ -47,7 +47,7 @@ export default function Dashboard() {
         </div>
 
         <div className="wd-dashboard-course">
-          <img src="/images/datastructures.jpg" width={200} />
+          <img src="/images/datastructures.jpg" width={200} alt="Data Structures Course" />
           <div>
             <Link className="wd-dashboard-course-link" to="/Kanbas/Courses/CS4040/Home">
               CS4040 Data Structures
@@ -60,7 +60,7 @@ export default function Dashboard() {
         </div>
 
         <div className="wd-dashboard-course">
-          <img src="/images/webdevelopment.jpg" width={200} />
+          <img src="/images/webdevelopment.jpg" width={200} alt="Web Development Course" />
           <div>
             <Link className="wd-dashboard-course-link" to="/Kanbas/Courses/CS5050/Home">
               CS5050 Web Development
@@ -73,7 +73,7 @@ export default function Dashboard() {
         </div>
 
         <div className="wd-dashboard-course">
-          <img src="/images/angular.jpg" width={200} />
+          <img src="/images/angular.jpg" width={200} alt="Angular Framework Course" />
           <div>
             <Link className="wd-dashboard-course-link" to="/Kanbas/Courses/CS6060/Home">
               CS6060 Angular Development
@@ -86,7 +86,7 @@ export default function Dashboard() {
         </div>
 
         <div className="wd-dashboard-course">
-          <img src="/images/flask.jpg" width={200} />
+          <img src="/images/flask.jpg" width={200} alt="Flask Framework Course" />
           <div>
             <Link className="wd-dashboard-course-link" to="/Kanbas/Courses/CS7070/Home">
               CS7070 Flask Development
