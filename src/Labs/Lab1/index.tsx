@@ -175,16 +175,16 @@ export default function Lab1() {
           <label htmlFor="wd-text-fields-username">Username:</label>
           <input id="wd-text-fields-username" placeholder="jdoe" /> <br />
           <label htmlFor="wd-text-fields-password">Password:</label>
-          <input type="password" id="wd-text-fields-password" value="123@#$asd" />
+          <input type="password" id="wd-text-fields-password" defaultValue="123@#$asd" />
           <br />
           <label htmlFor="wd-text-fields-first-name">First name:</label>
           <input type="text" id="wd-text-fields-first-name" title="John" /> <br />
           <label htmlFor="wd-text-fields-last-name">Last name:</label>
           <input type="text" id="wd-text-fields-last-name" placeholder="Doe"
-            value="Wonderland" title="The last name" />
+            defaultValue="Wonderland" title="The last name" />
           <h5>Text boxes</h5>
           <label>Biography:</label><br />
-          <textarea id="wd-textarea" cols={30} rows={10}>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</textarea>
+          <textarea id="wd-textarea" cols={30} defaultValue="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. " rows={10}></textarea>
 
           {/* Other HTML field types */}
           <h4>Other HTML field types</h4>
@@ -200,18 +200,18 @@ export default function Lab1() {
           <input type="number"
             id="wd-text-fields-salary-start"
             placeholder="1000"
-            value="100000" /><br />
+            defaultValue="100000" /><br />
 
           <label htmlFor="wd-text-fields-rating"> Rating: </label>
           <input type="range" id="wd-text-fields-rating"
             placeholder="Doe"
             max="5"
-            value="4" /><br />
+            defaultValue="4" /><br />
 
           <label htmlFor="wd-text-fields-dob"> Date of birth: </label>
           <input type="date"
             id="wd-text-fields-dob"
-            value="2000-01-21" /><br />
+            defaultValue="2000-01-21" /><br />
 
           {/* copy rest of form elements here  */}
         </form>
@@ -252,21 +252,21 @@ export default function Lab1() {
         <h5>Select one</h5>
         <label htmlFor="wd-select-one-genre"> Favorite movie genre: </label><br />
         <select id="wd-select-one-genre">
-          <option value="COMEDY">Comedy</option>
-          <option value="DRAMA">Drama</option>
-          <option selected value="SCIFI">
+          <option defaultValue="COMEDY">Comedy</option>
+          <option defaultValue="DRAMA">Drama</option>
+          <option defaultValue="SCIFI">
             Science Fiction</option>
-          <option value="FANTASY">Fantasy</option>
+          <option defaultValue="FANTASY">Fantasy</option>
         </select>
 
         <h5>Select many</h5>
         <label htmlFor="wd-select-many-genre"> Favorite movie genres: </label><br />
         <select id="wd-select-many-genre" multiple>
-          <option selected value="COMEDY">Comedy</option>
-          <option value="DRAMA">Drama</option>
-          <option selected value="SCIFI">
+          <option defaultValue="COMEDY">Comedy</option>
+          <option defaultValue="DRAMA">Drama</option>
+          <option defaultValue="SCIFI">
             Science Fiction</option>
-          <option value="FANTASY">Fantasy</option>
+          <option defaultValue="FANTASY">Fantasy</option>
         </select>
       </div>
 

@@ -10,13 +10,24 @@ export default function Assignments() {
       </h3>
       <ul id="wd-assignment-list">
         <li className="wd-assignment-list-item">
-          <a className="wd-assignment-link"
-            href="#/Kanbas/Courses/1234/Assignments/123">
+          <a className="wd-assignment-link" href="#/Kanbas/Courses/1234/Assignments/123">
             A1 - ENV + HTML
           </a>
         </li>
         <li className="wd-assignment-list-item">
-          {/* Complete On Your Own */}
+          <a className="wd-assignment-link" href="#/Kanbas/Courses/1234/Assignments/124">
+            A2 - CSS Basics
+          </a>
+        </li>
+        <li className="wd-assignment-list-item">
+          <a className="wd-assignment-link" href="#/Kanbas/Courses/1234/Assignments/125">
+            A3 - JavaScript Fundamentals
+          </a>
+        </li>
+        <li className="wd-assignment-list-item">
+          <a className="wd-assignment-link" href="#/Kanbas/Courses/1234/Assignments/126">
+            A4 - Flask Introduction
+          </a>
         </li>
       </ul>
     </div>
