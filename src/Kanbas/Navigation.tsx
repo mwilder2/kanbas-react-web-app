@@ -13,10 +13,10 @@ export default function KanbasNavigation() {
       {/* Northeastern Link with Logo */}
       <a id="wd-neu-link" target="_blank"
         href="https://www.northeastern.edu/"
+        rel="noreferrer"
         className="list-group-item bg-black border-0 text-center">
         <img src="/images/NEU.svg" width="75px" alt="Northeastern Logo" />
       </a>
-      <br />
 
       {/* Account Link */}
       <Link to="/Kanbas/Account" id="wd-account-link"
