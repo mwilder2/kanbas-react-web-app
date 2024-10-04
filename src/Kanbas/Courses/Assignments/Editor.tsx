@@ -1,117 +1,125 @@
+import { useState } from "react";
+
 export default function AssignmentEditor() {
+  const [points, setPoints] = useState(100);
+
   return (
-    <div id="wd-assignments-editor">
-      <label htmlFor="wd-name">Assignment Name</label>
-      <input id="wd-name" defaultValue="A1 - ENV + HTML" /><br /><br />
+    <div id="wd-assignments-editor" className="container mt-4">
+      {/* Assignment Name */}
+      <div className="row mb-3">
+        <div className="col-12">
+          <label htmlFor="wd-name" className="form-label">Assignment Name</label>
+          <input
+            id="wd-name"
+            className="form-control"
+            defaultValue="A1 - ENV + HTML"
+          />
+        </div>
+      </div>
 
-      <label htmlFor="wd-description">Description</label>
-      <textarea id="wd-description" defaultValue="The assignment is available online. Submit a link to the landing page of" />
-      <br /><br />
+      {/* Description */}
+      <div className="row mb-3">
+        <div className="col-12">
+          <label htmlFor="wd-description" className="form-label">Description</label>
+          <textarea
+            id="wd-description"
+            className="form-control"
+            defaultValue="The assignment is available online. Submit a link to the landing page of"
+          />
+        </div>
+      </div>
 
-      <table>
-        <tbody>
-          <tr>
-            <td align="right" valign="top">
-              <label htmlFor="wd-points">Points</label>
-            </td>
-            <td>
-              <input id="wd-points" defaultValue={100} />
-            </td>
-          </tr>
-          <tr>
-            <td align="right" valign="top">
-              <label htmlFor="wd-assignment-group">Assignment Group</label>
-            </td>
-            <td>
-              <input id="wd-group" defaultValue="Group A" />
-            </td>
-          </tr>
-          <tr>
-            <td align="right" valign="top">
-              <label htmlFor="wd-display-grade-as">Display Grade As</label>
-            </td>
-            <td>
-              <select id="wd-display-grade-as">
-                <option value="percentage">Percentage</option>
-                <option value="letter">Letter</option>
-              </select>
-            </td>
-          </tr>
-          <tr>
-            <td align="right" valign="top">
-              <label htmlFor="wd-submission-type">Submission Type</label>
-            </td>
-            <td>
-              <select id="wd-submission-type">
-                <option value="online">Online</option>
-                <option value="in-person">In Person</option>
-              </select>
-            </td>
-          </tr>
+      {/* Points and Assignment Group */}
+      <div className="row mb-3">
+        <div className="col-md-6">
+          <label htmlFor="wd-points" className="form-label">Points</label>
+          <input
+            id="wd-points"
+            className="form-control"
+            type="number"
+            value={points}
+            onChange={(e) => setPoints(Number(e.target.value))}
+          />
+        </div>
+        <div className="col-md-6">
+          <label htmlFor="wd-group" className="form-label">Assignment Group</label>
+          <input
+            id="wd-group"
+            className="form-control"
+            defaultValue="Group A"
+          />
+        </div>
+      </div>
 
-          {/* Online Entry Options checkboxes */}
-          <tr>
-            <td colSpan={2}>
-              <fieldset style={{ border: '1px solid #ccc', padding: '10px' }}>
-                <legend>Online Entry Options</legend>
-                <div>
-                  <input type="checkbox" id="text-entry" name="online-option" value="text-entry" />
-                  <label htmlFor="text-entry">Text Entry</label>
-                </div>
-                <div>
-                  <input type="checkbox" id="website-url" name="online-option" value="website-url" />
-                  <label htmlFor="website-url">Website URL</label>
-                </div>
-                <div>
-                  <input type="checkbox" id="media-recordings" name="online-option" value="media-recordings" />
-                  <label htmlFor="media-recordings">Media Recordings</label>
-                </div>
-                <div>
-                  <input type="checkbox" id="student-annotation" name="online-option" value="student-annotation" />
-                  <label htmlFor="student-annotation">Student Annotation</label>
-                </div>
-                <div>
-                  <input type="checkbox" id="file-uploads" name="online-option" value="file-uploads" />
-                  <label htmlFor="file-uploads">File Uploads</label>
-                </div>
-              </fieldset>
-            </td>
-          </tr>
+      {/* Display Grade As and Submission Type */}
+      <div className="row mb-3">
+        <div className="col-md-6">
+          <label htmlFor="wd-display-grade-as" className="form-label">Display Grade As</label>
+          <select id="wd-display-grade-as" className="form-control">
+            <option value="percentage">Percentage</option>
+            <option value="letter">Letter</option>
+          </select>
+        </div>
+        <div className="col-md-6">
+          <label htmlFor="wd-submission-type" className="form-label">Submission Type</label>
+          <select id="wd-submission-type" className="form-control">
+            <option value="online">Online</option>
+            <option value="in-person">In Person</option>
+          </select>
+        </div>
+      </div>
 
-          <tr>
-            <td align="right" valign="top">
-              <label htmlFor="wd-assign">Assign</label>
-            </td>
-            <td>
-              <input id="wd-assign" defaultValue="Everyone" />
-            </td>
-          </tr>
-          <tr>
-            <td align="right" valign="top">
-              <label htmlFor="wd-due-date">Due Date</label>
-            </td>
-            <td>
-              <input type="date" id="wd-due-date" />
-            </td>
-          </tr>
-          <tr>
-            <td align="right" valign="top">
-              <label htmlFor="wd-available-from">Available From</label>
-            </td>
-            <td>
-              <input type="date" id="wd-available-from" />
-            </td>
-          </tr>
-          <tr>
-            <td align="right" valign="top">
-              <label htmlFor="wd-available-until">Available Until</label>
-            </td>
-            <td>
-              <input type="date" id="wd-available-until" />
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      {/* Online Entry Options */}
+      <div className="row mb-3">
+        <div className="col-12">
+          <fieldset className="border p-3">
+            <legend className="w-auto">Online Entry Options</legend>
+            <div className="form-check">
+              <input type="checkbox" id="text-entry" className="form-check-input" />
+              <label htmlFor="text-entry" className="form-check-label">Text Entry</label>
+            </div>
+            <div className="form-check">
+              <input type="checkbox" id="website-url" className="form-check-input" />
+              <label htmlFor="website-url" className="form-check-label">Website URL</label>
+            </div>
+            <div className="form-check">
+              <input type="checkbox" id="media-recordings" className="form-check-input" />
+              <label htmlFor="media-recordings" className="form-check-label">Media Recordings</label>
+            </div>
+            <div className="form-check">
+              <input type="checkbox" id="student-annotation" className="form-check-input" />
+              <label htmlFor="student-annotation" className="form-check-label">Student Annotation</label>
+            </div>
+            <div className="form-check">
+              <input type="checkbox" id="file-uploads" className="form-check-input" />
+              <label htmlFor="file-uploads" className="form-check-label">File Uploads</label>
+            </div>
+          </fieldset>
+        </div>
+      </div>
+
+      {/* Assign and Dates */}
+      <div className="row mb-3">
+        <div className="col-md-6">
+          <label htmlFor="wd-assign" className="form-label">Assign</label>
+          <input id="wd-assign" className="form-control" defaultValue="Everyone" />
+        </div>
+        <div className="col-md-6">
+          <label htmlFor="wd-due-date" className="form-label">Due Date</label>
+          <input type="date" id="wd-due-date" className="form-control" />
+        </div>
+      </div>
+
+      <div className="row mb-3">
+        <div className="col-md-6">
+          <label htmlFor="wd-available-from" className="form-label">Available From</label>
+          <input type="date" id="wd-available-from" className="form-control" />
+        </div>
+        <div className="col-md-6">
+          <label htmlFor="wd-available-until" className="form-label">Available Until</label>
+          <input type="date" id="wd-available-until" className="form-control" />
+        </div>
+      </div>
     </div>
   );
 }
