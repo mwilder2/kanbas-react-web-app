@@ -1,4 +1,11 @@
 import BackgroundColors from "./BackgroundColors";
+import BootstrapCard from "./BootstrapCard";
+import BootstrapForms from "./BootstrapForms";
+import BootstrapGrids from "./BootstrapGrids";
+import BootstrapHyperlinkList from "./BootstrapHyperlinkList";
+import BootstrapLists from "./BootstrapLists";
+import BootstrapNavigation from "./BootstrapNavigation";
+import BootstrapTables from "./BootstrapTables";
 import Borders from "./Borders";
 import Corners from "./Corners";
 import Dimensions from "./Dimensions";
@@ -10,11 +17,14 @@ import Margins from "./Margins";
 import Padding from "./Padding";
 import Positions from "./Positions";
 import ReactIconsSampler from "./ReactIcons";
+import ResponsiveGrids from "./ResponsiveGrids";
+import ScreenSizeLabel from "./ScreenSizeLabel";
 import Zindex from "./Zindex";
 
 export default function Lab2() {
   return (
-    <div id="wd-lab2">
+    // <div id="wd-lab2">
+    <div className="container">
       <h2>Lab 2 - Cascading Style Sheets</h2>
 
       <h3>Styling with the STYLE attribute</h3>
@@ -79,8 +89,19 @@ export default function Lab2() {
       <Zindex />
       <GridLayout />
       <Flex />
-
       <ReactIconsSampler />
+
+      <BootstrapGrids />
+      <ResponsiveGrids />
+
+      <ScreenSizeLabel />
+      <BootstrapTables />
+      <BootstrapLists />
+      <BootstrapHyperlinkList />
+      <BootstrapForms />
+
+      <BootstrapNavigation />
+      <BootstrapCard />
 
     </div>
   );
