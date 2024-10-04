@@ -9,9 +9,10 @@ export default function BootstrapCard() {
           <p className="card-text">
             Stacking the most powerful rocket in history. Mars or bust!
           </p>
-          <a href="#" onClick={(e) => e.preventDefault()} className="btn btn-primary">
+          {/* Changed from <a> to <button> to fix a build error */}
+          <button className="btn btn-primary" onClick={(e) => e.preventDefault()}>
             Boldly Go
-          </a>
+          </button>
         </div>
       </div>
     </div>

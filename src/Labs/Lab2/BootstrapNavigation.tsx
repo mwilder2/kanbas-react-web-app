@@ -4,24 +4,25 @@ export default function BootstrapNavigation() {
       <h2>Tabs</h2>
       <ul className="nav nav-tabs">
         <li className="nav-item">
-          <a className="nav-link active" href="#" onClick={(e) => e.preventDefault()}>
+          {/* Changed from <a> to <button> to fix a build error */}
+          <button className="nav-link active btn" onClick={(e) => e.preventDefault()}>
             Active
-          </a>
+          </button>
         </li>
         <li className="nav-item">
-          <a className="nav-link" href="#" onClick={(e) => e.preventDefault()}>
+          <button className="nav-link btn" onClick={(e) => e.preventDefault()}>
             Link
-          </a>
+          </button>
         </li>
         <li className="nav-item">
-          <a className="nav-link" href="#" onClick={(e) => e.preventDefault()}>
+          <button className="nav-link btn" onClick={(e) => e.preventDefault()}>
             Link
-          </a>
+          </button>
         </li>
         <li className="nav-item">
-          <a className="nav-link disabled" href="#" onClick={(e) => e.preventDefault()}>
+          <button className="nav-link disabled btn" onClick={(e) => e.preventDefault()}>
             Disabled
-          </a>
+          </button>
         </li>
       </ul>
     </div>

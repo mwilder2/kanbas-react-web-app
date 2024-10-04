@@ -43,20 +43,23 @@ export default function KanbasNavigation() {
       <br />
 
       {/* Calendar Link */}
-      <Link to="/Kanbas/Calendar" id="wd-calendar-link"
-        className="list-group-item text-center border-0 bg-black text-white">
+      <button id="wd-calendar-link"
+        className="list-group-item text-center border-0 bg-black text-white"
+        disabled>
         <IoCalendarOutline className="fs-1 text-white" />
         <br /> Calendar
-      </Link>
+      </button>
       <br />
 
       {/* Inbox Link */}
-      <Link to="/Kanbas/Inbox" id="wd-inbox-link"
-        className="list-group-item text-center border-0 bg-black text-white">
+      <button id="wd-inbox-link"
+        className="list-group-item text-center border-0 bg-black text-white"
+        disabled>
         <FaInbox className="fs-1 text-white" />
         <br /> Inbox
-      </Link>
+      </button>
       <br />
+
 
       {/* Labs Link */}
       <Link to="/Labs" id="wd-labs-link"
