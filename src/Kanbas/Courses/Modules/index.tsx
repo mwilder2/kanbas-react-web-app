@@ -1,92 +1,49 @@
+// src/Kanbas/Courses/Modules/index.tsx
+import { useParams } from "react-router";
+import * as db from "../../Database"; // Import the modules from the Database
 import { BsGripVertical } from "react-icons/bs";
 import ModulesControls from "./ModulesControls";
 import LessonControlButtons from "./LessonControlButtons";
 
 export default function Modules() {
+  const { cid } = useParams(); // Get the course ID from the URL
+  const modules = db.modules; // Get the modules from the database
+
   return (
     <div>
       {/* Add the controls at the top */}
       <ModulesControls /><br /><br /><br /><br />
 
-      {/* List of modules */}
+      {/* List of modules dynamically filtered by course ID */}
       <ul id="wd-modules" className="list-group rounded-0">
-        {/* Week 1 */}
-        <li className="wd-module list-group-item p-0 mb-5 fs-5 border-gray">
-          <div className="wd-title p-3 ps-2 bg-secondary">
-            <BsGripVertical className="me-2 fs-3" />
-            Week 1 - Introduction to Web Development
-            <LessonControlButtons />
-          </div>
-          <ul className="wd-lessons list-group rounded-0">
-            <li className="wd-lesson list-group-item p-3 ps-1">
-              <BsGripVertical className="me-2 fs-3" />
-              LEARNING OBJECTIVES
-              <LessonControlButtons />
-              <ul className="wd-content">
-                <li className="wd-content-item">What is Web Development?</li>
-                <li className="wd-content-item">Setting up your development environment</li>
-                <li className="wd-content-item">Introduction to HTML and CSS</li>
+        {modules
+          .filter((module: any) => module.course === cid) // Filter modules by course ID
+          .map((module: any) => (
+            <li key={module._id} className="wd-module list-group-item p-0 mb-5 fs-5 border-gray">
+              <div className="wd-title p-3 ps-2 bg-secondary">
+                <BsGripVertical className="me-2 fs-3" />
+                {module.name}
+                <LessonControlButtons />
+              </div>
+              {/* Render lessons within each module */}
+              <ul className="wd-lessons list-group rounded-0">
+                {module.lessons.map((lesson: any) => (
+                  <li key={lesson._id} className="wd-lesson list-group-item p-3 ps-1">
+                    <BsGripVertical className="me-2 fs-3" />
+                    {lesson.name}
+                    <LessonControlButtons />
+                    <ul className="wd-content">
+                      {lesson.content.map((contentItem: string, index: number) => (
+                        <li key={index} className="wd-content-item">
+                          {contentItem}
+                        </li>
+                      ))}
+                    </ul>
+                  </li>
+                ))}
               </ul>
             </li>
-            <li className="wd-lesson list-group-item p-3 ps-1">
-              <BsGripVertical className="me-2 fs-3" />
-              LESSON 1: HTML Basics
-              <LessonControlButtons />
-              <ul className="wd-content">
-                <li className="wd-content-item">READING: Intro to HTML</li>
-                <li className="wd-content-item">SLIDES: HTML Fundamentals</li>
-              </ul>
-            </li>
-            <li className="wd-lesson list-group-item p-3 ps-1">
-              <BsGripVertical className="me-2 fs-3" />
-              LESSON 2: CSS Basics
-              <LessonControlButtons />
-              <ul className="wd-content">
-                <li className="wd-content-item">READING: Intro to CSS</li>
-                <li className="wd-content-item">SLIDES: CSS Fundamentals</li>
-              </ul>
-            </li>
-          </ul>
-        </li>
-
-        {/* Week 2 */}
-        <li className="wd-module list-group-item p-0 mb-5 fs-5 border-gray">
-          <div className="wd-title p-3 ps-2 bg-secondary">
-            <BsGripVertical className="me-2 fs-3" />
-            Week 2 - JavaScript Fundamentals
-            <LessonControlButtons />
-          </div>
-          <ul className="wd-lessons list-group rounded-0">
-            <li className="wd-lesson list-group-item p-3 ps-1">
-              <BsGripVertical className="me-2 fs-3" />
-              LEARNING OBJECTIVES
-              <LessonControlButtons />
-              <ul className="wd-content">
-                <li className="wd-content-item">Introduction to JavaScript</li>
-                <li className="wd-content-item">Variables, data types, and operators</li>
-                <li className="wd-content-item">Basic functions and control flow</li>
-              </ul>
-            </li>
-            <li className="wd-lesson list-group-item p-3 ps-1">
-              <BsGripVertical className="me-2 fs-3" />
-              LESSON 1: JavaScript Basics
-              <LessonControlButtons />
-              <ul className="wd-content">
-                <li className="wd-content-item">READING: JavaScript Basics</li>
-                <li className="wd-content-item">SLIDES: JavaScript Fundamentals</li>
-              </ul>
-            </li>
-            <li className="wd-lesson list-group-item p-3 ps-1">
-              <BsGripVertical className="me-2 fs-3" />
-              LESSON 2: Functions in JavaScript
-              <LessonControlButtons />
-              <ul className="wd-content">
-                <li className="wd-content-item">READING: JavaScript Functions</li>
-                <li className="wd-content-item">SLIDES: Understanding Functions</li>
-              </ul>
-            </li>
-          </ul>
-        </li>
+          ))}
       </ul>
     </div>
   );

@@ -1,6 +1,11 @@
+import { Link, useParams } from "react-router-dom";
 import { FaSearch, FaPlus } from "react-icons/fa";
+import * as db from "../../Database"; // Import the database
 
 export default function Assignments() {
+  const { cid } = useParams(); // Get the course ID from the URL
+  const assignments = db.assignments.filter((assignment) => assignment.course === cid); // Filter assignments by course
+
   return (
     <div id="wd-assignments" className="container">
       {/* Search Bar */}
@@ -27,46 +32,27 @@ export default function Assignments() {
 
       {/* Assignments Header */}
       <h3 id="wd-assignments-title" className="mb-3">
-        ASSIGNMENTS 40% of Total <button className="btn btn-primary btn-sm ms-2">+</button>
+        ASSIGNMENTS ({assignments.length} Total)
       </h3>
 
       {/* Assignment List */}
       <ul id="wd-assignment-list" className="list-group">
-        <li className="wd-assignment-list-item list-group-item d-flex justify-content-between align-items-center">
-          <div className="border-start border-success border-3 ps-2">
-            <a className="wd-assignment-link h5 mb-0 d-block text-decoration-none" href="#/Kanbas/Courses/1234/Assignments/123">
-              A1 - ENV + HTML
-            </a>
-            <small className="text-muted">Due: 2024-10-10 | 100 Points</small>
-          </div>
-        </li>
-
-        <li className="wd-assignment-list-item list-group-item d-flex justify-content-between align-items-center">
-          <div className="border-start border-success border-3 ps-2">
-            <a className="wd-assignment-link h5 mb-0 d-block text-decoration-none" href="#/Kanbas/Courses/1234/Assignments/124">
-              A2 - CSS Basics
-            </a>
-            <small className="text-muted">Due: 2024-10-17 | 90 Points</small>
-          </div>
-        </li>
-
-        <li className="wd-assignment-list-item list-group-item d-flex justify-content-between align-items-center">
-          <div className="border-start border-success border-3 ps-2">
-            <a className="wd-assignment-link h5 mb-0 d-block text-decoration-none" href="#/Kanbas/Courses/1234/Assignments/125">
-              A3 - JavaScript Fundamentals
-            </a>
-            <small className="text-muted">Due: 2024-10-24 | 85 Points</small>
-          </div>
-        </li>
-
-        <li className="wd-assignment-list-item list-group-item d-flex justify-content-between align-items-center">
-          <div className="border-start border-success border-3 ps-2">
-            <a className="wd-assignment-link h5 mb-0 d-block text-decoration-none" href="#/Kanbas/Courses/1234/Assignments/126">
-              A4 - Flask Introduction
-            </a>
-            <small className="text-muted">Due: 2024-10-31 | 95 Points</small>
-          </div>
-        </li>
+        {assignments.map((assignment) => (
+          <li
+            key={assignment._id}
+            className="wd-assignment-list-item list-group-item d-flex justify-content-between align-items-center"
+          >
+            <div className="border-start border-success border-3 ps-2">
+              <Link
+                className="wd-assignment-link h5 mb-0 d-block text-decoration-none"
+                to={`/Kanbas/Courses/${cid}/Assignments/${assignment._id}`}
+              >
+                {assignment.title}
+              </Link>
+              <small className="text-muted">Due: {assignment.dueDate} | {assignment.points} Points</small>
+            </div>
+          </li>
+        ))}
       </ul>
     </div>
   );

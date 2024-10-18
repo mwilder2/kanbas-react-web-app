@@ -1,49 +1,29 @@
-import { Link } from "react-router-dom";
-import '../styles.css';
+import { Link, useParams, useLocation } from "react-router-dom";
 
 export default function CoursesNavigation() {
+  const { cid } = useParams(); // Get the current course ID from the URL
+  const { pathname } = useLocation(); // Get the current pathname
+
+  // Array of links to be displayed in the sidebar
+  const links = ["Home", "Modules", "Piazza", "Zoom", "Assignments", "Quizzes", "Grades", "People"];
+
   return (
     <div id="wd-courses-navigation" className="list-group fs-5 rounded-0">
-      <Link id="wd-course-home-link"
-        to="/Kanbas/Courses/1234/Home"
-        className="list-group-item active border border-0">
-        Home
-      </Link>
-      <Link id="wd-course-modules-link"
-        to="/Kanbas/Courses/1234/Modules"
-        className="list-group-item text-danger border border-0">
-        Modules
-      </Link>
-      <Link id="wd-course-piazza-link"
-        to="/Kanbas/Courses/1234/Piazza"
-        className="list-group-item text-danger border border-0">
-        Piazza
-      </Link>
-      <Link id="wd-course-zoom-link"
-        to="/Kanbas/Courses/1234/Zoom"
-        className="list-group-item text-danger border border-0">
-        Zoom
-      </Link>
-      <Link id="wd-course-quizzes-link"
-        to="/Kanbas/Courses/1234/Assignments"
-        className="list-group-item text-danger border border-0">
-        Assignments
-      </Link>
-      <Link id="wd-course-assignments-link"
-        to="/Kanbas/Courses/1234/Quizzes"
-        className="list-group-item text-danger border border-0">
-        Quizzes
-      </Link>
-      <Link id="wd-course-grades-link"
-        to="/Kanbas/Courses/1234/Grades"
-        className="list-group-item text-danger border border-0">
-        Grades
-      </Link>
-      <Link id="wd-course-people-link"
-        to="/Kanbas/People"
-        className="list-group-item text-danger border border-0">
-        People
-      </Link>
+      {links.map((link) => {
+        const lowerLink = link.toLowerCase(); // Make the link lowercase for the URL
+        const isActive = pathname.includes(lowerLink); // Check if the link is active based on the pathname
+
+        return (
+          <Link
+            key={link}
+            id={`wd-course-${lowerLink}-link`}
+            to={`/Kanbas/Courses/${cid}/${lowerLink}`} // Encode the course ID in the path
+            className={`list-group-item border-0 ${isActive ? "active text-white" : "text-danger"}`}
+          >
+            {link}
+          </Link>
+        );
+      })}
     </div>
   );
 }

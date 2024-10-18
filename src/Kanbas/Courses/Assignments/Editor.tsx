@@ -1,7 +1,26 @@
-import { useState } from "react";
+import { useParams, Link } from "react-router-dom";
+import { useState, useEffect } from "react";
+import * as db from "../../Database";
 
 export default function AssignmentEditor() {
-  const [points, setPoints] = useState(100);
+  const { cid, aid } = useParams(); // Retrieve course ID and assignment ID from the URL
+  const [assignment, setAssignment] = useState<any>(null); // State for storing the assignment data
+  const [points, setPoints] = useState<number>(100); // State for points
+
+  // Find the assignment by aid (assignment ID)
+  useEffect(() => {
+    const foundAssignment = db.assignments.find(
+      (assignment: any) => assignment._id === aid
+    );
+    if (foundAssignment) {
+      setAssignment(foundAssignment);
+      setPoints(foundAssignment.points); // Initialize points from the assignment
+    }
+  }, [aid]);
+
+  if (!assignment) {
+    return <div>Loading...</div>; // Show a loading state while fetching assignment
+  }
 
   return (
     <div id="wd-assignments-editor" className="container mt-4">
@@ -12,7 +31,7 @@ export default function AssignmentEditor() {
           <input
             id="wd-name"
             className="form-control"
-            defaultValue="A1 - ENV + HTML"
+            defaultValue={assignment.name} // Fill from the retrieved assignment
           />
         </div>
       </div>
@@ -24,7 +43,7 @@ export default function AssignmentEditor() {
           <textarea
             id="wd-description"
             className="form-control"
-            defaultValue="The assignment is available online. Submit a link to the landing page of"
+            defaultValue={assignment.description} // Fill from the retrieved assignment
           />
         </div>
       </div>
@@ -37,7 +56,7 @@ export default function AssignmentEditor() {
             id="wd-points"
             className="form-control"
             type="number"
-            value={points}
+            value={points} // Update points dynamically
             onChange={(e) => setPoints(Number(e.target.value))}
           />
         </div>
@@ -46,79 +65,47 @@ export default function AssignmentEditor() {
           <input
             id="wd-group"
             className="form-control"
-            defaultValue="Group A"
+            defaultValue={assignment.group} // Fill from the retrieved assignment
           />
         </div>
       </div>
 
-      {/* Display Grade As and Submission Type */}
+      {/* Dates */}
       <div className="row mb-3">
-        <div className="col-md-6">
-          <label htmlFor="wd-display-grade-as" className="form-label">Display Grade As</label>
-          <select id="wd-display-grade-as" className="form-control">
-            <option value="percentage">Percentage</option>
-            <option value="letter">Letter</option>
-          </select>
-        </div>
-        <div className="col-md-6">
-          <label htmlFor="wd-submission-type" className="form-label">Submission Type</label>
-          <select id="wd-submission-type" className="form-control">
-            <option value="online">Online</option>
-            <option value="in-person">In Person</option>
-          </select>
-        </div>
-      </div>
-
-      {/* Online Entry Options */}
-      <div className="row mb-3">
-        <div className="col-12">
-          <fieldset className="border p-3">
-            <legend className="w-auto">Online Entry Options</legend>
-            <div className="form-check">
-              <input type="checkbox" id="text-entry" className="form-check-input" />
-              <label htmlFor="text-entry" className="form-check-label">Text Entry</label>
-            </div>
-            <div className="form-check">
-              <input type="checkbox" id="website-url" className="form-check-input" />
-              <label htmlFor="website-url" className="form-check-label">Website URL</label>
-            </div>
-            <div className="form-check">
-              <input type="checkbox" id="media-recordings" className="form-check-input" />
-              <label htmlFor="media-recordings" className="form-check-label">Media Recordings</label>
-            </div>
-            <div className="form-check">
-              <input type="checkbox" id="student-annotation" className="form-check-input" />
-              <label htmlFor="student-annotation" className="form-check-label">Student Annotation</label>
-            </div>
-            <div className="form-check">
-              <input type="checkbox" id="file-uploads" className="form-check-input" />
-              <label htmlFor="file-uploads" className="form-check-label">File Uploads</label>
-            </div>
-          </fieldset>
-        </div>
-      </div>
-
-      {/* Assign and Dates */}
-      <div className="row mb-3">
-        <div className="col-md-6">
-          <label htmlFor="wd-assign" className="form-label">Assign</label>
-          <input id="wd-assign" className="form-control" defaultValue="Everyone" />
-        </div>
         <div className="col-md-6">
           <label htmlFor="wd-due-date" className="form-label">Due Date</label>
-          <input type="date" id="wd-due-date" className="form-control" />
+          <input
+            type="date"
+            id="wd-due-date"
+            className="form-control"
+            defaultValue={assignment.dueDate} // Fill from the retrieved assignment
+          />
+        </div>
+        <div className="col-md-6">
+          <label htmlFor="wd-available-from" className="form-label">Available From</label>
+          <input
+            type="date"
+            id="wd-available-from"
+            className="form-control"
+            defaultValue={assignment.availableFrom} // Fill from the retrieved assignment
+          />
         </div>
       </div>
 
-      <div className="row mb-3">
-        <div className="col-md-6">
-          <label htmlFor="wd-available-from" className="form-label">Available From</label>
-          <input type="date" id="wd-available-from" className="form-control" />
-        </div>
-        <div className="col-md-6">
-          <label htmlFor="wd-available-until" className="form-label">Available Until</label>
-          <input type="date" id="wd-available-until" className="form-control" />
-        </div>
+      {/* Cancel and Save Buttons */}
+      <div className="d-flex justify-content-between">
+        <Link
+          to={`/Kanbas/Courses/${cid}/Assignments`} // Navigate back to assignments for the course
+          className="btn btn-secondary"
+        >
+          Cancel
+        </Link>
+        <Link
+          to={`/Kanbas/Courses/${cid}/Assignments`}
+          className="btn btn-primary"
+        >
+          Save
+        </Link>
       </div>
     </div>
   );
