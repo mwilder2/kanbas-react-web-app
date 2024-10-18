@@ -1,16 +1,19 @@
 // src/Kanbas/Courses/People/Table.tsx
-import { useParams } from "react-router-dom";
+// import { useParams } from "react-router-dom";
 import { FaUserCircle } from "react-icons/fa";
 import * as db from "../../Database"; // Import users and enrollments from the database
 
 export default function PeopleTable() {
-  const { cid } = useParams(); // Get the course ID from the URL
-  const { users, enrollments } = db; // Extract users and enrollments from the database
+  // const { cid } = useParams(); // Get the course ID from the URL
+  // const { users, enrollments } = db; // Extract users and enrollments from the database
 
   // Filter users based on their enrollment in the selected course
   // const enrolledUsers = users.filter((user) =>
   //   enrollments.some((enrollment) => enrollment.user === user._id && enrollment.course === cid)
   // );
+
+
+  const { users } = db; // Extract users and enrollments from the database
 
   const enrolledUsers = users;
 
