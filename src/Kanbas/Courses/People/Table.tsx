@@ -8,9 +8,12 @@ export default function PeopleTable() {
   const { users, enrollments } = db; // Extract users and enrollments from the database
 
   // Filter users based on their enrollment in the selected course
-  const enrolledUsers = users.filter((user) =>
-    enrollments.some((enrollment) => enrollment.user === user._id && enrollment.course === cid)
-  );
+  // const enrolledUsers = users.filter((user) =>
+  //   enrollments.some((enrollment) => enrollment.user === user._id && enrollment.course === cid)
+  // );
+
+  const enrolledUsers = users;
+
 
   return (
     <div id="wd-people-table">
