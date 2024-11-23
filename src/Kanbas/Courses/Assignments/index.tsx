@@ -23,7 +23,7 @@ export default function Assignments() {
   };
 
   const confirmDelete = () => {
-    if (selectedAssignment) dispatch(deleteAssignment(selectedAssignment));
+    // if (selectedAssignment) dispatch(deleteAssignment(selectedAssignment));
     setShowDeleteDialog(false);
     setSelectedAssignment(null);
   };

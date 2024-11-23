@@ -1,18 +1,18 @@
 // src/Kanbas/index.tsx
 import { Routes, Route, Navigate } from "react-router";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./styles.css";
 import "bootstrap/dist/js/bootstrap.bundle.min.js";
+import * as client from "../KanbasApi";
 import Account from "./Account";
-import Dashboard from "./Dashboard";
+import ProtectedRoute from "./Account/ProtectedRoute";
 import Courses from "./Courses";
-import KanbasNavigation from "./Navigation";
 import PeopleTable from "./Courses/People/Table";
-import * as db from "./Database";
-import ProtectedRoute from "./Account/ProtectedRoute"; // Import ProtectedRoute
+import Dashboard from "./Dashboard";
+import KanbasNavigation from "./Navigation";
 
 export default function Kanbas() {
-  const [courses, setCourses] = useState<any[]>(db.courses);
+  const [courses, setCourses] = useState<any[]>([]);
   const [course, setCourse] = useState<any>({
     _id: "1234",
     name: "New Course",
@@ -22,18 +22,49 @@ export default function Kanbas() {
     description: "New Description",
   });
 
-  const addNewCourse = () => {
-    setCourses([...courses, { ...course, _id: new Date().getTime().toString() }]);
+  // Fetch courses on load
+  useEffect(() => {
+    const fetchCourses = async () => {
+      try {
+        const fetchedCourses = await client.getCourses();
+        setCourses(fetchedCourses);
+      } catch (error) {
+        console.error("Error fetching courses:", error);
+      }
+    };
+    fetchCourses();
+  }, []);
+
+  // Add new course
+  const addNewCourse = async () => {
+    try {
+      const newCourse = await client.addCourse(course);
+      setCourses([...courses, newCourse]);
+    } catch (error) {
+      console.error("Error adding new course:", error);
+    }
   };
 
-  const deleteCourse = (courseId: string) => {
-    setCourses(courses.filter((course) => course._id !== courseId));
+  // Delete course
+  const deleteCourse = async (courseId: string) => {
+    try {
+      await client.deleteCourse(courseId);
+      setCourses(courses.filter((course) => course._id !== courseId));
+    } catch (error) {
+      console.error("Error deleting course:", error);
+    }
   };
 
-  const updateCourse = () => {
-    setCourses(
-      courses.map((c) => (c._id === course._id ? course : c))
-    );
+  // Update course
+  const updateCourse = async () => {
+    try {
+      await client.updateCourse(course);
+      setCourses(
+        courses.map((c) => (c._id === course._id ? course : c))
+      );
+    } catch (error) {
+      console.error("Error updating course:", error);
+    }
   };
 
   return (

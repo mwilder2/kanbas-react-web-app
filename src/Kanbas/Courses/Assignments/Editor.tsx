@@ -26,9 +26,9 @@ export default function AssignmentEditor() {
 
   const saveAssignment = () => {
     if (aid) {
-      dispatch(updateAssignment(assignment));
+      // dispatch(updateAssignment(assignment));
     } else {
-      dispatch(addAssignment(assignment));
+      // dispatch(addAssignment(assignment));
     }
     navigate(`/Kanbas/Courses/${cid}/Assignments`);
   };

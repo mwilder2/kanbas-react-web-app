@@ -2,7 +2,6 @@
 import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import '../styles.css';
-import * as db from "../Database";
 import { useState } from "react";
 import { enroll, unenroll } from "../Account/enrollmentReducer";
 

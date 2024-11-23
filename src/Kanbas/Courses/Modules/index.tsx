@@ -19,7 +19,7 @@ export default function Modules() {
         moduleName={moduleName}
         setModuleName={setModuleName}
         addModule={() => {
-          dispatch(addModule({ name: moduleName, course: cid }));
+          // dispatch(addModule({ name: moduleName, course: cid }));
           setModuleName("");
         }}
       />
@@ -35,11 +35,12 @@ export default function Modules() {
                   <input
                     className="form-control w-50 d-inline-block"
                     onChange={(e) =>
-                      dispatch(updateModule({ ...module, name: e.target.value }))
+                      // dispatch(updateModule({ ...module, name: e.target.value }))
+                      console.log("updateModule")
                     }
                     onKeyDown={(e) => {
                       if (e.key === "Enter") {
-                        dispatch(updateModule({ ...module, editing: false }));
+                        // dispatch(updateModule({ ...module, editing: false }));
                       }
                     }}
                     defaultValue={module.name}
@@ -48,7 +49,7 @@ export default function Modules() {
                 <ModuleControlButtons
                   moduleId={module._id}
                   deleteModule={(moduleId) => {
-                    dispatch(deleteModule(moduleId));
+                    // dispatch(deleteModule(moduleId));
                   }}
                   editModule={(moduleId) => dispatch(editModule(moduleId))}
                 />

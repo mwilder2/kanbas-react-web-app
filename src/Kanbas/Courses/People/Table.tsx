@@ -1,22 +1,26 @@
 // src/Kanbas/Courses/People/Table.tsx
 // import { useParams } from "react-router-dom";
 import { FaUserCircle } from "react-icons/fa";
-import * as db from "../../Database"; // Import users and enrollments from the database
+import { useState, useEffect } from "react";
+import axios from "axios"; // For fetching data from the server
 
 export default function PeopleTable() {
-  // const { cid } = useParams(); // Get the course ID from the URL
-  // const { users, enrollments } = db; // Extract users and enrollments from the database
+  const [users, setUsers] = useState<any[]>([]);
 
-  // Filter users based on their enrollment in the selected course
-  // const enrolledUsers = users.filter((user) =>
-  //   enrollments.some((enrollment) => enrollment.user === user._id && enrollment.course === cid)
-  // );
+  // Fetch users from the server
+  const fetchUsers = async () => {
+    try {
+      const response = await axios.get("http://localhost:4000/kanbas/users");
+      setUsers(response.data);
+    } catch (error) {
+      console.error("Error fetching users:", error);
+    }
+  };
 
-
-  const { users } = db; // Extract users and enrollments from the database
-
-  const enrolledUsers = users;
-
+  // Fetch data on component load
+  useEffect(() => {
+    fetchUsers();
+  }, []);
 
   return (
     <div id="wd-people-table">
@@ -32,8 +36,8 @@ export default function PeopleTable() {
           </tr>
         </thead>
         <tbody>
-          {/* Dynamically render rows based on the filtered list of enrolled users */}
-          {enrolledUsers.map((user) => (
+          {/* Dynamically render rows based on the filtered list of users */}
+          {users.map((user) => (
             <tr key={user._id}>
               <td className="wd-full-name text-nowrap">
                 <FaUserCircle className="me-2 fs-1 text-secondary" />
@@ -52,3 +56,13 @@ export default function PeopleTable() {
     </div>
   );
 }
+
+
+
+// const { cid } = useParams(); // Get the course ID from the URL
+// const { users, enrollments } = db; // Extract users and enrollments from the database
+
+// Filter users based on their enrollment in the selected course
+// const enrolledUsers = users.filter((user) =>
+//   enrollments.some((enrollment) => enrollment.user === user._id && enrollment.course === cid)
+// );

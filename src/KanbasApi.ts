@@ -19,3 +19,27 @@ export const deleteCourse = async (courseId: string) => {
 export const updateCourse = async (course: any) => {
   await axios.put(`${API_BASE_URL}/courses/${course._id}`, course);
 };
+
+export const signIn = async (credentials: { username: string; password: string }) => {
+  const response = await axios.post("http://localhost:4000/kanbas/signin", credentials);
+  return response.data;
+};
+
+export const getAssignments = async () => {
+  const response = await axios.get("http://localhost:4000/kanbas/assignments");
+  return response.data;
+};
+
+export const createAssignment = async (assignment: any) => {
+  const response = await axios.post("http://localhost:4000/kanbas/assignments", assignment);
+  return response.data;
+};
+
+export const deleteAssignment = async (assignmentId: string) => {
+  await axios.delete(`http://localhost:4000/kanbas/assignments/${assignmentId}`);
+};
+
+export const updateAssignment = async (assignment: any) => {
+  const response = await axios.put(`http://localhost:4000/kanbas/assignments/${assignment._id}`, assignment);
+  return response.data;
+};
