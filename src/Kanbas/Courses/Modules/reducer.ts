@@ -1,27 +1,28 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
-import axios from "axios";
-
-// API endpoint for modules
-const MODULES_API = "http://localhost:4000/kanbas/modules";
+import * as client from "../../../KanbasApi";
 
 // Async actions
-export const fetchModules = createAsyncThunk("modules/fetchModules", async () => {
-  const response = await axios.get(MODULES_API);
-  return response.data;
-});
+
+export const fetchModulesForCourse = createAsyncThunk(
+  "modules/fetchModulesForCourse",
+  async (courseId: string) => {
+    const modules = await client.findModulesForCourse(courseId);
+    return modules;
+  }
+);
 
 export const addModule = createAsyncThunk(
   "modules/addModuleToServer",
   async (module: any) => {
-    const response = await axios.post(MODULES_API, module);
-    return response.data;
+    const newModule = await client.addModule(module);
+    return newModule;
   }
 );
 
 export const deleteModule = createAsyncThunk(
   "modules/deleteModuleFromServer",
   async (moduleId: string) => {
-    await axios.delete(`${MODULES_API}/${moduleId}`);
+    await client.deleteModule(moduleId);
     return moduleId;
   }
 );
@@ -29,8 +30,8 @@ export const deleteModule = createAsyncThunk(
 export const updateModule = createAsyncThunk(
   "modules/updateModuleOnServer",
   async (module: any) => {
-    await axios.put(`${MODULES_API}/${module._id}`, module);
-    return module;
+    const updatedModule = await client.updateModule(module);
+    return updatedModule;
   }
 );
 
@@ -38,6 +39,7 @@ export const updateModule = createAsyncThunk(
 interface Module {
   _id: string;
   name: string;
+  course: string;
   editing?: boolean;
 }
 
@@ -59,6 +61,9 @@ const modulesSlice = createSlice({
   name: "modules",
   initialState,
   reducers: {
+    setModules: (state, action) => {
+      state.modules = action.payload;
+    },
     editModule: (state, { payload: moduleId }) => {
       state.modules = state.modules.map((m) =>
         m._id === moduleId ? { ...m, editing: true } : m
@@ -67,16 +72,16 @@ const modulesSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      // Fetch modules
-      .addCase(fetchModules.pending, (state) => {
+      // Fetch modules for a course
+      .addCase(fetchModulesForCourse.pending, (state) => {
         state.loading = true;
         state.error = null;
       })
-      .addCase(fetchModules.fulfilled, (state, { payload: modules }) => {
+      .addCase(fetchModulesForCourse.fulfilled, (state, { payload: modules }) => {
         state.modules = modules;
         state.loading = false;
       })
-      .addCase(fetchModules.rejected, (state, { error }) => {
+      .addCase(fetchModulesForCourse.rejected, (state, { error }) => {
         state.loading = false;
         state.error = error.message ?? "Unknown error";
       })
@@ -97,5 +102,5 @@ const modulesSlice = createSlice({
   },
 });
 
-export const { editModule } = modulesSlice.actions;
+export const { setModules, editModule } = modulesSlice.actions;
 export default modulesSlice.reducer;

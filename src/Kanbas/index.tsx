@@ -1,70 +1,46 @@
-// src/Kanbas/index.tsx
 import { Routes, Route, Navigate } from "react-router";
-import { useEffect, useState } from "react";
-import "./styles.css";
-import "bootstrap/dist/js/bootstrap.bundle.min.js";
-import * as client from "../KanbasApi";
+import { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import Account from "./Account";
 import ProtectedRoute from "./Account/ProtectedRoute";
 import Courses from "./Courses";
 import PeopleTable from "./Courses/People/Table";
 import Dashboard from "./Dashboard";
 import KanbasNavigation from "./Navigation";
+import { fetchCoursesAsync, addCourseAsync, updateCourseAsync, deleteCourseAsync, setCurrentCourse } from "./Courses/reducer";
+import { AppDispatch } from "./store";
 
 export default function Kanbas() {
-  const [courses, setCourses] = useState<any[]>([]);
-  const [course, setCourse] = useState<any>({
-    _id: "1234",
-    name: "New Course",
-    number: "New Number",
-    startDate: "2023-09-10",
-    endDate: "2023-12-15",
-    description: "New Description",
-  });
 
-  // Fetch courses on load
+  const dispatch: AppDispatch = useDispatch();
+
+  const { courses, currentCourse, loading, error } = useSelector((state: any) => state.courses);
+
+
   useEffect(() => {
-    const fetchCourses = async () => {
-      try {
-        const fetchedCourses = await client.getCourses();
-        setCourses(fetchedCourses);
-      } catch (error) {
-        console.error("Error fetching courses:", error);
-      }
+    // Fetch courses on component load
+    dispatch(fetchCoursesAsync());
+  }, [dispatch]);
+
+  const addNewCourse = () => {
+    const newCourse = {
+      _id: Date.now().toString(),
+      name: "New Course",
+      description: "A new course description.",
+      image: "/images/default.jpg",
     };
-    fetchCourses();
-  }, []);
+    dispatch(addCourseAsync(newCourse));
+  };
 
-  // Add new course
-  const addNewCourse = async () => {
-    try {
-      const newCourse = await client.addCourse(course);
-      setCourses([...courses, newCourse]);
-    } catch (error) {
-      console.error("Error adding new course:", error);
+  const updateCourse = () => {
+    if (currentCourse) {
+      const updatedCourse = { ...currentCourse, name: `${currentCourse.name} (Updated)` };
+      dispatch(updateCourseAsync(updatedCourse));
     }
   };
 
-  // Delete course
-  const deleteCourse = async (courseId: string) => {
-    try {
-      await client.deleteCourse(courseId);
-      setCourses(courses.filter((course) => course._id !== courseId));
-    } catch (error) {
-      console.error("Error deleting course:", error);
-    }
-  };
-
-  // Update course
-  const updateCourse = async () => {
-    try {
-      await client.updateCourse(course);
-      setCourses(
-        courses.map((c) => (c._id === course._id ? course : c))
-      );
-    } catch (error) {
-      console.error("Error updating course:", error);
-    }
+  const deleteCourse = (courseId: string) => {
+    dispatch(deleteCourseAsync(courseId));
   };
 
   return (
@@ -74,16 +50,14 @@ export default function Kanbas() {
         <Routes>
           <Route path="/" element={<Navigate to="Account" />} />
           <Route path="/Account/*" element={<Account />} />
-
-          {/* Protect Dashboard and Courses routes */}
           <Route
             path="/Dashboard"
             element={
               <ProtectedRoute>
                 <Dashboard
                   courses={courses}
-                  course={course}
-                  setCourse={setCourse}
+                  course={currentCourse}
+                  setCourse={(course) => dispatch(setCurrentCourse(course))}
                   addNewCourse={addNewCourse}
                   deleteCourse={deleteCourse}
                   updateCourse={updateCourse}
@@ -91,15 +65,7 @@ export default function Kanbas() {
               </ProtectedRoute>
             }
           />
-          <Route
-            path="/Courses/:cid/*"
-            element={
-              <ProtectedRoute>
-                <Courses courses={courses} />
-              </ProtectedRoute>
-            }
-          />
-
+          <Route path="/Courses/:cid/*" element={<ProtectedRoute><Courses courses={courses} /></ProtectedRoute>} />
           <Route path="/People" element={<PeopleTable />} />
         </Routes>
       </div>

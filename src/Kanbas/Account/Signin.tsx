@@ -19,7 +19,7 @@ export default function Signin() {
       dispatch(setCurrentUser(user));
       navigate("/Kanbas/Dashboard");
     } catch (error: any) {
-      // Handle error (e.g., invalid credentials)
+      // Handle error
       setErrorMessage(error.response?.data?.message || "Sign in failed. Please try again.");
     }
   };

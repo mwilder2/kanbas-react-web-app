@@ -3,7 +3,8 @@ import { Link } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import '../styles.css';
 import { useState } from "react";
-import { enroll, unenroll } from "../Account/enrollmentReducer";
+import { enrollUser, unenrollUser } from "../Account/enrollmentReducer";
+import { AppDispatch } from "../store";
 
 // Define types for props
 interface Course {
@@ -33,17 +34,20 @@ export default function Dashboard({
   // Access current user from Redux store
   const { currentUser } = useSelector((state: any) => state.accountReducer);
   const { enrollments } = useSelector((state: any) => state.enrollmentReducer);
-  const dispatch = useDispatch();
+  const dispatch: AppDispatch = useDispatch();
   const [showEnrollments, setShowEnrollments] = useState(false);
 
-  const filteredCourses = showEnrollments
-    ? courses
-    : courses.filter((course) =>
-      enrollments.some(
-        (enrollment: any) =>
-          enrollment.user === currentUser?._id && enrollment.course === course._id
-      )
-    );
+  const filteredCourses = courses;
+
+
+  // const filteredCourses = showEnrollments
+  //   ? courses
+  //   : courses.filter((course) =>
+  //     enrollments.some(
+  //       (enrollment: any) =>
+  //         enrollment.user === currentUser?._id && enrollment.course === course._id
+  //     )
+  //   );
 
   return (
     <div id="wd-dashboard" className="container mt-4">
@@ -93,7 +97,7 @@ export default function Dashboard({
                     <button
                       onClick={(event) => {
                         event.preventDefault();
-                        dispatch(unenroll({ userId: currentUser._id, courseId: course._id }));
+                        dispatch(unenrollUser({ userId: currentUser._id, courseId: course._id }));
                       }}
                       className="btn btn-danger float-end"
                     >
@@ -103,7 +107,7 @@ export default function Dashboard({
                     <button
                       onClick={(event) => {
                         event.preventDefault();
-                        dispatch(enroll({ userId: currentUser._id, courseId: course._id }));
+                        dispatch(enrollUser({ userId: currentUser._id, courseId: course._id }));
                       }}
                       className="btn btn-success float-end"
                     >

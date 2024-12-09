@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { useSelector, useDispatch } from "react-redux";
 import { setCurrentUser } from "./reducer";
+import * as client from "../../KanbasApi";
 
 export default function Profile() {
   const [profile, setProfile] = useState<any>({});
@@ -9,13 +10,30 @@ export default function Profile() {
   const navigate = useNavigate();
   const { currentUser } = useSelector((state: any) => state.accountReducer);
 
-  // Redirect to Signin if there's no current user
-  const fetchProfile = () => {
-    if (!currentUser) return navigate("/Kanbas/Account/Signin");
-    setProfile(currentUser);
+  const fetchProfile = async () => {
+    if (!currentUser) {
+      try {
+        const profileData = await client.getProfile();
+        setProfile(profileData);
+        dispatch(setCurrentUser(profileData));
+      } catch {
+        navigate("/Kanbas/Account/Signin");
+      }
+    } else {
+      setProfile(currentUser);
+    }
   };
 
-  // Sign out function
+  const updateProfile = async () => {
+    try {
+      const updatedProfile = await client.updateProfile(profile);
+      setProfile(updatedProfile);
+      dispatch(setCurrentUser(updatedProfile));
+    } catch {
+      alert("Failed to update profile.");
+    }
+  };
+
   const signout = () => {
     dispatch(setCurrentUser(null));
     navigate("/Kanbas/Account/Signin");
@@ -31,52 +49,45 @@ export default function Profile() {
       {profile && (
         <div>
           <input
-            defaultValue={profile.username}
-            id="wd-username"
+            value={profile.username}
             className="form-control mb-2"
             placeholder="Username"
             onChange={(e) => setProfile({ ...profile, username: e.target.value })}
           />
           <input
-            defaultValue={profile.password}
-            id="wd-password"
+            value={profile.password}
             type="password"
             className="form-control mb-2"
             placeholder="Password"
             onChange={(e) => setProfile({ ...profile, password: e.target.value })}
           />
           <input
-            defaultValue={profile.firstName}
-            id="wd-firstname"
+            value={profile.firstName}
             className="form-control mb-2"
             placeholder="First Name"
             onChange={(e) => setProfile({ ...profile, firstName: e.target.value })}
           />
           <input
-            defaultValue={profile.lastName}
-            id="wd-lastname"
+            value={profile.lastName}
             className="form-control mb-2"
             placeholder="Last Name"
             onChange={(e) => setProfile({ ...profile, lastName: e.target.value })}
           />
           <input
-            defaultValue={profile.dob}
-            id="wd-dob"
+            value={profile.dob}
             type="date"
             className="form-control mb-2"
             onChange={(e) => setProfile({ ...profile, dob: e.target.value })}
           />
           <input
-            defaultValue={profile.email}
-            id="wd-email"
+            value={profile.email}
             type="email"
             className="form-control mb-2"
             placeholder="Email"
             onChange={(e) => setProfile({ ...profile, email: e.target.value })}
           />
           <select
-            defaultValue={profile.role}
-            id="wd-role"
+            value={profile.role}
             className="form-control mb-3"
             onChange={(e) => setProfile({ ...profile, role: e.target.value })}
           >
@@ -85,7 +96,10 @@ export default function Profile() {
             <option value="FACULTY">Faculty</option>
             <option value="STUDENT">Student</option>
           </select>
-          <button onClick={signout} className="btn btn-danger w-100" id="wd-signout-btn">
+          <button onClick={updateProfile} className="btn btn-primary w-100 mb-2">
+            Update
+          </button>
+          <button onClick={signout} className="btn btn-danger w-100">
             Sign out
           </button>
         </div>

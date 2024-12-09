@@ -2,20 +2,28 @@
 import { Link, useParams, useNavigate } from "react-router-dom";
 import { FaSearch, FaPlus, FaTrash } from "react-icons/fa";
 import { useDispatch, useSelector } from "react-redux";
-import { deleteAssignment } from "./reducer";
-import { useState } from "react";
+import { deleteAssignment, fetchAssignments } from "./reducer";
+import { useEffect, useState } from "react";
+import { AppDispatch } from "../../store";
 
 export default function Assignments() {
   const { cid } = useParams();
+  const dispatch: AppDispatch = useDispatch();
+  const navigate = useNavigate();
+
   const assignments = useSelector((state: any) =>
     state.assignmentsReducer.assignments.filter(
       (assignment: any) => assignment.course === cid
     )
   );
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
+
   const [showDeleteDialog, setShowDeleteDialog] = useState(false);
   const [selectedAssignment, setSelectedAssignment] = useState<string | null>(null);
+
+  useEffect(() => {
+    // Fetch assignments when the component loads
+    dispatch(fetchAssignments());
+  }, [dispatch]);
 
   const handleDelete = (assignmentId: string) => {
     setSelectedAssignment(assignmentId);
@@ -23,7 +31,7 @@ export default function Assignments() {
   };
 
   const confirmDelete = () => {
-    // if (selectedAssignment) dispatch(deleteAssignment(selectedAssignment));
+    if (selectedAssignment) dispatch(deleteAssignment(selectedAssignment));
     setShowDeleteDialog(false);
     setSelectedAssignment(null);
   };

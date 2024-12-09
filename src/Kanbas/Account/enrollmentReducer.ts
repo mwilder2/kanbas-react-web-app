@@ -1,37 +1,76 @@
-// src/Kanbas/Account/enrollmentReducer.ts
-import { createSlice, PayloadAction } from "@reduxjs/toolkit";
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import * as client from "../../KanbasApi"; // Update path if necessary
 
-// Define the shape of each enrollment object
 interface Enrollment {
+  _id: string;
   user: string;
   course: string;
 }
 
-// Define the shape of the initial state
 interface EnrollmentState {
   enrollments: Enrollment[];
+  status: string;
+  error: string | null;
 }
 
 const initialState: EnrollmentState = {
-  enrollments: [], // Array of enrollment objects { user: 'userId', course: 'courseId' }
+  enrollments: [],
+  status: "idle",
+  error: null,
 };
+
+// Async Thunks
+export const fetchEnrollments = createAsyncThunk("enrollment/fetchEnrollments", async () => {
+  const response = await client.getEnrollments();
+  return response;
+});
+
+export const enrollUser = createAsyncThunk(
+  "enrollment/enrollUser",
+  async ({ userId, courseId }: { userId: string; courseId: string }) => {
+    const response = await client.enrollUser(userId, courseId);
+    return response;
+  }
+);
+
+export const unenrollUser = createAsyncThunk(
+  "enrollment/unenrollUser",
+  async ({ userId, courseId }: { userId: string; courseId: string }) => {
+    const response = await client.unenrollUser(userId, courseId);
+    return response;
+  }
+);
 
 const enrollmentSlice = createSlice({
   name: "enrollment",
   initialState,
-  reducers: {
-    enroll: (state, action: PayloadAction<{ userId: string; courseId: string }>) => {
-      const { userId, courseId } = action.payload;
-      state.enrollments.push({ user: userId, course: courseId });
-    },
-    unenroll: (state, action: PayloadAction<{ userId: string; courseId: string }>) => {
-      const { userId, courseId } = action.payload;
-      state.enrollments = state.enrollments.filter(
-        (enrollment) => !(enrollment.user === userId && enrollment.course === courseId)
-      );
-    },
+  reducers: {},
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchEnrollments.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(fetchEnrollments.fulfilled, (state, action) => {
+        state.status = "succeeded";
+        state.enrollments = action.payload;
+      })
+      .addCase(fetchEnrollments.rejected, (state, action) => {
+        state.status = "failed";
+        state.error = action.error.message ?? "Failed to fetch enrollments";
+      })
+      .addCase(enrollUser.fulfilled, (state, action) => {
+        state.enrollments.push(action.payload);
+      })
+      .addCase(unenrollUser.fulfilled, (state, action) => {
+        state.enrollments = state.enrollments.filter(
+          (enrollment) =>
+            !(
+              enrollment.user === action.payload.user &&
+              enrollment.course === action.payload.course
+            )
+        );
+      });
   },
 });
 
-export const { enroll, unenroll } = enrollmentSlice.actions;
 export default enrollmentSlice.reducer;

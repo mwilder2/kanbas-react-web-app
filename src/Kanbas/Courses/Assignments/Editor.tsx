@@ -1,13 +1,14 @@
 // src/Kanbas/Courses/Assignments/AssignmentEditor.tsx
 import { useParams, Link, useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addAssignment, updateAssignment } from "./reducer";
+import { AppDispatch } from "../../store";
 
 export default function AssignmentEditor() {
   const { cid, aid } = useParams();
   const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const dispatch: AppDispatch = useDispatch();
   const existingAssignment = useSelector((state: any) =>
     state.assignmentsReducer.assignments.find((assignment: any) => assignment._id === aid)
   );
@@ -25,10 +26,14 @@ export default function AssignmentEditor() {
   );
 
   const saveAssignment = () => {
+    if (!assignment.name || !assignment.points || !assignment.dueDate) {
+      alert("Please fill out all required fields.");
+      return;
+    }
     if (aid) {
-      // dispatch(updateAssignment(assignment));
+      dispatch(updateAssignment(assignment));
     } else {
-      // dispatch(addAssignment(assignment));
+      dispatch(addAssignment(assignment));
     }
     navigate(`/Kanbas/Courses/${cid}/Assignments`);
   };
@@ -39,41 +44,41 @@ export default function AssignmentEditor() {
       <input
         className="form-control mb-2"
         placeholder="Assignment Name"
-        value={assignment.name}
+        value={assignment.name || ""}
         onChange={(e) => setAssignment({ ...assignment, name: e.target.value })}
       />
       <textarea
         className="form-control mb-2"
         placeholder="Description"
-        value={assignment.description}
+        value={assignment.description || ""}
         onChange={(e) => setAssignment({ ...assignment, description: e.target.value })}
       />
       <input
         className="form-control mb-2"
         type="number"
         placeholder="Points"
-        value={assignment.points}
+        value={assignment.points || 100}
         onChange={(e) => setAssignment({ ...assignment, points: parseInt(e.target.value) })}
       />
       <input
         className="form-control mb-2"
         type="date"
         placeholder="Due Date"
-        value={assignment.dueDate}
+        value={assignment.dueDate || ""}
         onChange={(e) => setAssignment({ ...assignment, dueDate: e.target.value })}
       />
       <input
         className="form-control mb-2"
         type="date"
         placeholder="Available From"
-        value={assignment.availableFrom}
+        value={assignment.availableFrom || ""}
         onChange={(e) => setAssignment({ ...assignment, availableFrom: e.target.value })}
       />
       <input
         className="form-control mb-2"
         type="date"
         placeholder="Available Until"
-        value={assignment.availableUntil}
+        value={assignment.availableUntil || ""}
         onChange={(e) => setAssignment({ ...assignment, availableUntil: e.target.value })}
       />
       <div className="d-flex justify-content-between">
