@@ -1,7 +1,7 @@
 import axios from "axios";
 
 // Base API URL for the backend server
-const API_BASE_URL = "http://localhost:4000/api";
+const API_BASE_URL = "https://kanbas-node-server-app-c9p0.onrender.com/api";
 
 // Modules API
 export const findModulesForCourse = async (courseId: string) => {
