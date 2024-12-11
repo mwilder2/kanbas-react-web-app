@@ -13,8 +13,8 @@ export const fetchModulesForCourse = createAsyncThunk(
 
 export const addModule = createAsyncThunk(
   "modules/addModuleToServer",
-  async (module: any) => {
-    const newModule = await client.addModule(module);
+  async (courseId: string, module: any) => {
+    const newModule = await client.createModuleForCourse(courseId, module);
     return newModule;
   }
 );

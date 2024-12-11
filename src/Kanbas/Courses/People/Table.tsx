@@ -1,27 +1,22 @@
-// src/Kanbas/Courses/People/Table.tsx
-// import { useParams } from "react-router-dom";
 import { FaUserCircle } from "react-icons/fa";
-import { useState, useEffect } from "react";
-import axios from "axios"; // For fetching data from the server
+import { Link } from "react-router-dom";
 
-export default function PeopleTable() {
-  const [users, setUsers] = useState<any[]>([]);
+interface User {
+  _id: string;
+  firstName: string;
+  lastName: string;
+  loginId: string;
+  section: string;
+  role: string;
+  lastActivity: string;
+  totalActivity: string;
+}
 
-  // Fetch users from the server
-  const fetchUsers = async () => {
-    try {
-      const response = await axios.get("http://localhost:4000/kanbas/users");
-      setUsers(response.data);
-    } catch (error) {
-      console.error("Error fetching users:", error);
-    }
-  };
+interface PeopleTableProps {
+  users?: User[]; // Optional users prop for flexibility
+}
 
-  // Fetch data on component load
-  useEffect(() => {
-    fetchUsers();
-  }, []);
-
+export default function PeopleTable({ users }: { users: any[] }) {
   return (
     <div id="wd-people-table">
       <table className="table table-striped">
@@ -36,13 +31,13 @@ export default function PeopleTable() {
           </tr>
         </thead>
         <tbody>
-          {/* Dynamically render rows based on the filtered list of users */}
           {users.map((user) => (
             <tr key={user._id}>
               <td className="wd-full-name text-nowrap">
-                <FaUserCircle className="me-2 fs-1 text-secondary" />
-                <span className="wd-first-name">{user.firstName}</span>{" "}
-                <span className="wd-last-name">{user.lastName}</span>
+                <Link to={`/Kanbas/Account/Users/${user._id}`} className="text-decoration-none">
+                  <FaUserCircle className="me-2 fs-1 text-secondary" />
+                  <span className="wd-first-name">{user.firstName}</span> {user.lastName}
+                </Link>
               </td>
               <td className="wd-login-id">{user.loginId}</td>
               <td className="wd-section">{user.section}</td>
