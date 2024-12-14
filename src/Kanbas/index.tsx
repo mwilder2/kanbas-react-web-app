@@ -9,6 +9,7 @@ import Dashboard from "./Dashboard";
 import KanbasNavigation from "./Navigation";
 import { fetchCoursesAsync, addCourseAsync, updateCourseAsync, deleteCourseAsync, setCurrentCourse } from "./Courses/reducer";
 import { AppDispatch } from "./store";
+import Session from "./Account/Session";
 
 export default function Kanbas() {
 
@@ -44,31 +45,33 @@ export default function Kanbas() {
   };
 
   return (
-    <div id="wd-kanbas">
-      <KanbasNavigation />
-      <div className="wd-main-content-offset p-3">
-        <Routes>
-          <Route path="/" element={<Navigate to="Account" />} />
-          <Route path="/Account/*" element={<Account />} />
-          <Route
-            path="/Dashboard"
-            element={
-              <ProtectedRoute>
-                <Dashboard
-                  courses={courses}
-                  course={currentCourse}
-                  setCourse={(course) => dispatch(setCurrentCourse(course))}
-                  addNewCourse={addNewCourse}
-                  deleteCourse={deleteCourse}
-                  updateCourse={updateCourse}
-                />
-              </ProtectedRoute>
-            }
-          />
-          <Route path="/Courses/:cid/*" element={<ProtectedRoute><Courses courses={courses} /></ProtectedRoute>} />
-          <Route path="/People" element={<PeopleTable />} />
-        </Routes>
+    <Session>
+      <div id="wd-kanbas">
+        <KanbasNavigation />
+        <div className="wd-main-content-offset p-3">
+          <Routes>
+            <Route path="/" element={<Navigate to="Account" />} />
+            <Route path="/Account/*" element={<Account />} />
+            <Route
+              path="/Dashboard"
+              element={
+                <ProtectedRoute>
+                  <Dashboard
+                    courses={courses}
+                    course={currentCourse}
+                    setCourse={(course) => dispatch(setCurrentCourse(course))}
+                    addNewCourse={addNewCourse}
+                    deleteCourse={deleteCourse}
+                    updateCourse={updateCourse}
+                  />
+                </ProtectedRoute>
+              }
+            />
+            <Route path="/Courses/:cid/*" element={<ProtectedRoute><Courses courses={courses} /></ProtectedRoute>} />
+            <Route path="/People" element={<PeopleTable />} />
+          </Routes>
+        </div>
       </div>
-    </div>
+    </Session>
   );
 }

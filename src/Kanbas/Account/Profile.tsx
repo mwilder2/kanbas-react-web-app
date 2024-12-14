@@ -4,6 +4,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { setCurrentUser } from "./reducer";
 import * as client from "../../KanbasApi";
 
+
 export default function Profile() {
   const [profile, setProfile] = useState<any>({});
   const dispatch = useDispatch();
@@ -23,20 +24,23 @@ export default function Profile() {
       setProfile(currentUser);
     }
   };
-
   const updateProfile = async () => {
     try {
-      const updatedProfile = await client.updateProfile(profile);
-      setProfile(updatedProfile);
-      dispatch(setCurrentUser(updatedProfile));
-    } catch {
+      const updatedProfile = await client.updateUser(profile);
+      setProfile(updatedProfile); // Update local state
+      dispatch(setCurrentUser(updatedProfile)); // Update Redux state
+
+      // Provide user feedback
+      alert("Profile updated successfully!");
+    } catch (error) {
       alert("Failed to update profile.");
     }
   };
 
-  const signout = () => {
-    dispatch(setCurrentUser(null));
-    navigate("/Kanbas/Account/Signin");
+  const signout = async () => {
+    await client.signout(); // Call the backend API to reset the user
+    dispatch(setCurrentUser(null)); // Clear the current user in the Redux store
+    navigate("/Kanbas/Account/Signin"); // Navigate to the Sign In page
   };
 
   useEffect(() => {
