@@ -9,8 +9,9 @@ import { enrollUser, unenrollUser } from "../Account/enrollmentReducer";
 interface Course {
   _id: string;
   name: string;
+  number: string;
+  credits: number;
   description: string;
-  image?: string;
 }
 
 interface DashboardProps {
@@ -72,10 +73,11 @@ export default function Dashboard({
           className="btn btn-primary float-end mb-3"
           onClick={() =>
             addNewCourse({
-              _id: Date.now().toString(),
+              _id: "",
               name: "New Course",
+              number: "CS-101",
+              credits: 3,
               description: "This is a new course",
-              image: "/images/default.jpg",
             })
           }
           id="wd-add-new-course-click"
@@ -100,7 +102,7 @@ export default function Dashboard({
           <div className="col" key={course._id}>
             <div className="card h-100">
               <img
-                src={course.image || "/images/reactjs.jpg"}
+                src={"/images/reactjs.jpg"}
                 className="card-img-top wd-course-img"
                 alt={`${course.name} Course`}
               />

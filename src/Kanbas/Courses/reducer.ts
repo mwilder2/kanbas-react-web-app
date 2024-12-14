@@ -5,8 +5,9 @@ import * as client from "../../KanbasApi";
 interface Course {
   _id: string;
   name: string;
+  number: string;
+  credits: number;
   description: string;
-  image?: string;
 }
 
 // Initial state type

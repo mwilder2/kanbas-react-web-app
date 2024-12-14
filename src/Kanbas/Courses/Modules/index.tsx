@@ -117,24 +117,3 @@ export default function Modules() {
     </div>
   );
 }
-
-//  <ul id="wd-modules" className="list-group rounded-0">
-// {modules.length === 0 ? (
-//   <li className="list-group-item text-center">
-//     No modules available for this course.
-//   </li>
-// ) : (
-//   modules.map((module: any) => (
-//     <li className="list-group-item d-flex justify-content-between" key={module._id}>
-//       <span>{module.name}</span>
-//       <button
-//         className="btn btn-danger"
-//         onClick={() => removeModule(module._id)}
-//       >
-//         Delete
-//       </button>
-//     </li>
-//   ))
-// )}
-// </ul> */}
-// {/* <ul id="wd-modules" className="list-group rounded-0" key={modules.length}> */ }

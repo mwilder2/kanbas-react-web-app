@@ -14,11 +14,11 @@ export const fetchAssignments = createAsyncThunk(
 export const addAssignment = createAsyncThunk(
   "assignments/addAssignment",
   async (assignment: any) => {
-    const newAssignment = await client.createAssignment(assignment); // Create assignment on the server
+    console.log("Thunk triggered with assignment:", assignment); // Log the assignment being passed
+    const newAssignment = await client.createAssignment(assignment);
     return newAssignment;
   }
 );
-
 export const deleteAssignment = createAsyncThunk(
   "assignments/deleteAssignment",
   async (assignmentId: string) => {
@@ -30,7 +30,7 @@ export const deleteAssignment = createAsyncThunk(
 export const updateAssignment = createAsyncThunk(
   "assignments/updateAssignment",
   async (assignment: any) => {
-    const updatedAssignment = await client.updateAssignment(assignment); // Update assignment on the server
+    const updatedAssignment = await client.createAssignment(assignment); // Update assignment on the server
     return updatedAssignment;
   }
 );

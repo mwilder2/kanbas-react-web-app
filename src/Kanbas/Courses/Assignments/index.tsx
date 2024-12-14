@@ -70,7 +70,7 @@ export default function Assignments() {
               className="h5 mb-0 d-block text-decoration-none"
               to={`/Kanbas/Courses/${cid}/Assignments/${assignment._id}`}
             >
-              {assignment.title}
+              {assignment.name}
             </Link>
             <div>
               <FaTrash className="text-danger ms-3" onClick={() => handleDelete(assignment._id)} />

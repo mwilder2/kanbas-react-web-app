@@ -26,6 +26,8 @@ export default function AssignmentEditor() {
   );
 
   const saveAssignment = () => {
+    console.log("Assignment being saved:", assignment);
+
     if (!assignment.name || !assignment.points || !assignment.dueDate) {
       alert("Please fill out all required fields.");
       return;
@@ -37,6 +39,7 @@ export default function AssignmentEditor() {
     }
     navigate(`/Kanbas/Courses/${cid}/Assignments`);
   };
+
 
   return (
     <div id="wd-assignments-editor" className="container mt-4">
