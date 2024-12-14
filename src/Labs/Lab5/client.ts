@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const REMOTE_SERVER = process.env.REACT_APP_REMOTE_SERVER;
+const REMOTE_SERVER = "http://localhost:4000/api";
 
 // Welcome message
 export const fetchWelcomeMessage = async () => {
