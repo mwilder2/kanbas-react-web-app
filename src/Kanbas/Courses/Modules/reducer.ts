@@ -13,11 +13,19 @@ export const fetchModulesForCourse = createAsyncThunk(
 
 export const addModule = createAsyncThunk(
   "modules/addModuleToServer",
-  async (module: any) => {
-    const newModule = await client.addModule(module);
+  async ({ courseId, module }: { courseId: string; module: any }) => {
+    const newModule = await client.createModuleForCourse(courseId, module);
     return newModule;
   }
 );
+
+// export const addModule = createAsyncThunk(
+//   "modules/addModuleToServer",
+//   async (courseId: string, module: any) => {
+//     const newModule = await client.createModuleForCourse(courseId, module);
+//     return newModule;
+//   }
+// );
 
 export const deleteModule = createAsyncThunk(
   "modules/deleteModuleFromServer",
@@ -56,7 +64,6 @@ const initialState: ModulesState = {
   loading: false,
   error: null,
 };
-
 const modulesSlice = createSlice({
   name: "modules",
   initialState,
@@ -78,26 +85,35 @@ const modulesSlice = createSlice({
         state.error = null;
       })
       .addCase(fetchModulesForCourse.fulfilled, (state, { payload: modules }) => {
-        state.modules = modules;
+        state.modules = modules.map((module: any) => ({ ...module, editing: false }));
         state.loading = false;
       })
       .addCase(fetchModulesForCourse.rejected, (state, { error }) => {
         state.loading = false;
-        state.error = error.message ?? "Unknown error";
+        state.error = error.message ?? "Failed to fetch modules.";
       })
       // Add module
       .addCase(addModule.fulfilled, (state, { payload: module }) => {
-        state.modules.push(module);
+        state.modules.push({ ...module, editing: false });
+      })
+      .addCase(addModule.rejected, (state, { error }) => {
+        state.error = error.message ?? "Failed to add module.";
       })
       // Delete module
       .addCase(deleteModule.fulfilled, (state, { payload: moduleId }) => {
         state.modules = state.modules.filter((m) => m._id !== moduleId);
       })
+      .addCase(deleteModule.rejected, (state, { error }) => {
+        state.error = error.message ?? "Failed to delete module.";
+      })
       // Update module
-      .addCase(updateModule.fulfilled, (state, { payload: module }) => {
+      .addCase(updateModule.fulfilled, (state, { payload: updatedModule }) => {
         state.modules = state.modules.map((m) =>
-          m._id === module._id ? module : m
+          m._id === updatedModule._id ? updatedModule : m
         );
+      })
+      .addCase(updateModule.rejected, (state, { error }) => {
+        state.error = error.message ?? "Failed to update module.";
       });
   },
 });

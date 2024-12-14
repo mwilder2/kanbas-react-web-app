@@ -69,6 +69,12 @@ const enrollmentSlice = createSlice({
               enrollment.course === action.payload.course
             )
         );
+      })
+      .addCase(enrollUser.rejected, (state, action) => {
+        state.error = action.error.message ?? "Failed to enroll user";
+      })
+      .addCase(unenrollUser.rejected, (state, action) => {
+        state.error = action.error.message ?? "Failed to unenroll user";
       });
   },
 });

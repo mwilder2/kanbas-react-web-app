@@ -24,10 +24,18 @@ export const getModules = async () => {
   return response.data;
 };
 
-export const addModule = async (module: any) => {
-  const response = await axiosWithCredentials.post(MODULES_API, module);
+export const createModuleForCourse = async (courseId: string, module: any) => {
+  const response = await axios.post(
+    `${COURSES_API}/${courseId}/modules`,
+    module
+  );
   return response.data;
 };
+
+// export const deleteModule = async (moduleId: string) => {
+//   const response = await axios.delete(`${MODULES_API}/${moduleId}`);
+//   return response.data;
+// };
 
 export const deleteModule = async (moduleId: string) => {
   await axiosWithCredentials.delete(`${MODULES_API}/${moduleId}`);
@@ -39,23 +47,29 @@ export const updateModule = async (module: any) => {
 };
 
 // Courses API
-export const getCourses = async () => {
-  const response = await axiosWithCredentials.get(COURSES_API);
-  return response.data;
+export const fetchAllCourses = async () => {
+  const { data } = await axios.get(COURSES_API);
+  return data;
 };
 
-export const addCourse = async (course: any) => {
-  const response = await axiosWithCredentials.post(COURSES_API, course);
-  return response.data;
+export const findMyCourses = async () => {
+  const { data } = await axiosWithCredentials.get(`${USERS_API}/current/courses`);
+  return data;
 };
 
-export const deleteCourse = async (courseId: string) => {
-  await axiosWithCredentials.delete(`${COURSES_API}/${courseId}`);
+export const createCourse = async (course: any) => {
+  const { data } = await axiosWithCredentials.post(`${USERS_API}/current/courses`, course);
+  console.log(data);
+  return data;
 };
 
 export const updateCourse = async (course: any) => {
   const response = await axiosWithCredentials.put(`${COURSES_API}/${course._id}`, course);
   return response.data;
+};
+
+export const deleteCourse = async (courseId: string) => {
+  await axiosWithCredentials.delete(`${COURSES_API}/${courseId}`);
 };
 
 // Users API

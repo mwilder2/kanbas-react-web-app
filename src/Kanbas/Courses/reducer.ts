@@ -27,12 +27,12 @@ const initialState: CoursesState = {
 
 // Async Thunks
 export const fetchCoursesAsync = createAsyncThunk<Course[]>("courses/fetchCourses", async () => {
-  const response = await client.getCourses();
+  const response = await client.fetchAllCourses();
   return response;
 });
 
 export const addCourseAsync = createAsyncThunk<Course, Course>("courses/addCourse", async (course) => {
-  const response = await client.addCourse(course);
+  const response = await client.createCourse(course);
   return response;
 });
 
