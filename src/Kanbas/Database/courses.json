@@ -1,44 +1,32 @@
 [
   {
-    "_id": "CS1010",
-    "name": "CS1010 React JS",
-    "description": "Full Stack Software Development with React",
-    "image": "/images/reactjs.webp"
+    "name": "Introduction to Computer Science",
+    "number": "CS101",
+    "credits": 3,
+    "description": "Learn the basics of computer science, including algorithms, data structures, and programming fundamentals."
   },
   {
-    "_id": "CS2020",
-    "name": "CS2020 Artificial Intelligence",
-    "description": "Introduction to Artificial Intelligence",
-    "image": "/images/ai.jpg"
+    "name": "Data Structures and Algorithms",
+    "number": "CS102",
+    "credits": 4,
+    "description": "An in-depth look at data structures and algorithms, with a focus on efficiency and problem-solving."
   },
   {
-    "_id": "CS3030",
-    "name": "CS3030 Cyber Security",
-    "description": "Foundations of Cybersecurity",
-    "image": "/images/cybersecurity.jpg"
+    "name": "Web Development",
+    "number": "CS201",
+    "credits": 3,
+    "description": "Explore the fundamentals of web development, including HTML, CSS, JavaScript, and frameworks."
   },
   {
-    "_id": "CS4040",
-    "name": "CS4040 Data Structures",
-    "description": "Data Structures and Algorithms",
-    "image": "/images/datastructures.jpg"
+    "name": "Database Management",
+    "number": "CS202",
+    "credits": 3,
+    "description": "Learn about relational databases, SQL, and database design principles."
   },
   {
-    "_id": "CS5050",
-    "name": "CS5050 Web Development",
-    "description": "Frontend Development with Web Technologies",
-    "image": "/images/webdevelopment.jpg"
-  },
-  {
-    "_id": "CS6060",
-    "name": "CS6060 Angular Development",
-    "description": "Frontend Development with Angular",
-    "image": "/images/angular.jpg"
-  },
-  {
-    "_id": "CS7070",
-    "name": "CS7070 Flask Development",
-    "description": "Backend Development with Flask",
-    "image": "/images/flask.jpg"
+    "name": "Machine Learning Basics",
+    "number": "CS301",
+    "credits": 3,
+    "description": "An introduction to machine learning concepts, including supervised and unsupervised learning."
   }
 ]
